@@ -1,11 +1,16 @@
 package pages;
 
+import org.junit.BeforeClass;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.time.Duration;
+import java.util.Properties;
 
 public class BasePage {
     private WebDriver driver;
@@ -20,8 +25,21 @@ public class BasePage {
         return driver;
     }
 
-    public void waitUntilIsClickable(WebElement element) {
+        public void waitUntilIsClickable(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+    public void waitUntilIsVisible(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+    public void waitUntilIsInvisible(WebElement element){
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+    public void waitUntilAlertIsPresent(){
+        wait.until(ExpectedConditions.alertIsPresent());
+    }
+    public void waitUntilElementIsSelected(By by){
+        wait.until(ExpectedConditions.elementToBeSelected(by));
+    }
+
 
 }
