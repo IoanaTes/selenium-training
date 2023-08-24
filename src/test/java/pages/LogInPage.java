@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Properties;
+
 public class LogInPage extends BasePage {
     private WebDriver driver;
 
@@ -22,13 +24,13 @@ public class LogInPage extends BasePage {
     private WebElement loginBtn;
 
 
-    public void setUsernameField() {
+    public void setUsernameField(String username) {
         waitUntilIsClickable(usernameField);
-        usernameField.sendKeys("Admin");
+        usernameField.sendKeys(username);
     }
 
-    public void setPasswordField() {
-        passwordField.sendKeys("admin123");
+    public void setPasswordField(String password) {
+        passwordField.sendKeys(password);
     }
 
     public void clickLoginBtn() {

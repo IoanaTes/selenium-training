@@ -47,10 +47,10 @@ public class StepDefinition {
         driver.get(DocumentUtils.getPropertiesFile().getProperty("url"));
     }
 
-    @And("I use the correct credentials")
-    public void loginWithCorrectCredentials() {
-        logInPage.setUsernameField();
-        logInPage.setPasswordField();
+    @And("^I use the \"(.*)\" username and \"(.*)\" password$")
+    public void loginWithCorrectCredentials(String username, String password) {
+        logInPage.setUsernameField(username);
+        logInPage.setPasswordField(password);
     }
 
     @When("I click on Sign In button")
