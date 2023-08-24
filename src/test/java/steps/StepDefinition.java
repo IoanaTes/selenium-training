@@ -1,5 +1,6 @@
 package steps;
 
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -23,6 +24,10 @@ public class StepDefinition {
     private LogInPage logInPage;
     private HomePage homePage;
 
+//    ExtentReports reports = new ExtentReports();
+//
+//    ExtentTest test = reports.
+
 
     @Before
     public void before() {
@@ -42,25 +47,32 @@ public class StepDefinition {
         driver.quit();
     }
 
-    @Given("I access the website")
+    @Given("user access the website")
     public void accessWebsite() throws IOException {
         driver.get(DocumentUtils.getPropertiesFile().getProperty("url"));
     }
 
-    @And("^I use the \"(.*)\" username and \"(.*)\" password$")
-    public void loginWithCorrectCredentials(String username, String password) {
-        logInPage.setUsernameField(username);
-        logInPage.setPasswordField(password);
+    @And("^user uses the \"(.*)\" username and correct password$")
+    public void login(String username) throws IOException {
+        if (username.equals("Gusername"))
+            logInPage.loginScenarios("correct username");
+        else if (username.equals("Busername")) {
+            logInPage.loginScenarios("incorrect username");
+        }
     }
 
-    @When("I click on Sign In button")
+    @When("user clicks on Sign In button")
     public void clickLogInButton() {
         logInPage.clickLoginBtn();
     }
 
-    @Then("I should be logged in successfully")
-    public void verifySuccessfulLogin() {
-        Assert.assertTrue("Logged in successfully", homePage.isLoginSuccessful());
+    @Then("^user should \"(.*)\"$")
+    public void verifyLogin(String outcome) {
+        if (outcome.equals("log in successfully")) {
+            Assert.assertTrue("Login was not successful.", homePage.isLoginSuccessful());
+        } else if (outcome.equals("NOT log in successfully")) {
+            Assert.assertTrue("Login was successful.", logInPage.areCredentialsInvalid());
+        }
     }
 
 }
