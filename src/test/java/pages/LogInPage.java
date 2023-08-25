@@ -44,14 +44,20 @@ public class LogInPage extends BasePage {
         loginBtn.click();
     }
 
-    public void loginScenarios(String username) throws IOException {
-        if (username.equals("correct username")) {
-            setUsernameField(DocumentUtils.getPropertiesFile().getProperty("username"));
-            setPasswordField(DocumentUtils.getPropertiesFile().getProperty("password"));
-        } else if (username.equals("incorrect username")) {
-            setUsernameField(DocumentUtils.getPropertiesFile().getProperty("fakeusername"));
-            setPasswordField(DocumentUtils.getPropertiesFile().getProperty("password"));
+    public void setCredentials(String username) {
+        try {
+            if (username.equals("correct username")) {
+                setUsernameField(DocumentUtils.getPropertiesFile().getProperty("username"));
+                setPasswordField(DocumentUtils.getPropertiesFile().getProperty("password"));
+            } else if (username.equals("incorrect username")) {
+                setUsernameField(DocumentUtils.getPropertiesFile().getProperty("fakeusername"));
+                setPasswordField(DocumentUtils.getPropertiesFile().getProperty("password"));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     public boolean areCredentialsInvalid() {

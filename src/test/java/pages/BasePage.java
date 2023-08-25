@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.FileInputStream;
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
 
 public class BasePage {
@@ -39,6 +40,9 @@ public class BasePage {
     }
     public void waitUntilElementIsSelected(By by){
         wait.until(ExpectedConditions.elementToBeSelected(by));
+    }
+    public void waitUntilListIsVisible(List<WebElement> listOfElements){
+        wait.until(ExpectedConditions.visibilityOfAllElements(listOfElements));
     }
 
 

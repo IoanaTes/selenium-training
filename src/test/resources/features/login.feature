@@ -2,14 +2,14 @@
 Feature: Login feature
 
   Scenario Outline: Login
-    Given user access the website
-    And user uses the "<username>" username and correct password
-    When user clicks on Sign In button
-    Then user should "<outcome>"
+    Given the user accesses the website
+    And the user introduces the "<credentials>"
+    When the user clicks on Login button
+    Then the user should be "<outcome>" logged in
     Examples:
-      | username  | outcome                 |
-      | Gusername | log in successfully     |
-      | Busername | NOT log in successfully |
+      | credentials         | outcome          |
+      | valid credentials   | successfully     |
+      | invalid credentials | not successfully |
 
 
 
