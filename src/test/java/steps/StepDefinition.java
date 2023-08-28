@@ -12,7 +12,6 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.v85.page.Page;
 import org.openqa.selenium.support.PageFactory;
 import pages.ContactDetailsPage;
 import pages.HomePage;
@@ -68,7 +67,7 @@ public class StepDefinition {
         }
     }
 
-    @When("the user clicks on Login button")
+    @When("the user presses on Login button")
     public void clickLogInButton() {
         logInPage.clickLoginBtn();
     }
@@ -86,7 +85,7 @@ public class StepDefinition {
         homePage.clickLeaveLink();
     }
     @And("user selects the Rejected status from the 'Show Leave with Status' section")
-    public void selectRejectedStatus() throws InterruptedException {
+    public void selectRejectedStatus(){
         homePage.selectRejectedStatus();
 
     }
@@ -94,7 +93,7 @@ public class StepDefinition {
     public void verifyRejectedStatusIsSelected(){
        Assert.assertTrue("The rejected status was not successfully selected.",homePage.findIfRejectedStatusIsSelected());
     }
-    @And("the user clicks the 'My Info' option on the menu")
+    @And("the user navigates to the 'My Info' page from the menu")
     public void clickMyInfoLink(){
         homePage.clickMyInfoLink();
     }
@@ -122,33 +121,39 @@ public class StepDefinition {
     public void verifyAttachmentAddedSuccessfully(){
        Assert.assertTrue("The attachment was not added successfully.",contactDetailsPage.verifyAttachmentIsAdded());
     }
+    @And("the user updates the Street 1 field from contact details")
+    public void updateStreetField(){
+        contactDetailsPage.insertStreet1();
+    }
+    @And("the user selects Algeria as country")
+    public void selectAlgeriaAsCountry(){
+        contactDetailsPage.clickCountryField();
+        contactDetailsPage.selectAlgeriaCountryOption();
+    }
+    @And("the user presses the Save button")
+    public void saveUpdatedContactDetails(){
+        contactDetailsPage.clickSaveContactDetailsBtn();
+    }
+    @And("the user should see the successfully updated confirmation message")
+    public void verifyContactDetailsUpdatedSuccessfully(){
+        Assert.assertTrue("The contacts details were not updated successfully.",contactDetailsPage.verifyContactDetailsSuccessfullyUpdated());
+    }
+    @And("the user ticks the checkbox to select one record saved in the Records Found section")
+    public void tickCheckboxOfRecordToBeDeleted() throws InterruptedException {
+        Thread.sleep(10000);
+        contactDetailsPage.clickRecordCheckBox();
+    }
+    @And("the user presses the 'Delete' button to delete that record")
+    public void clickDeleteRecordButton(){
+        contactDetailsPage.clickDeleteSelectedRecordsBtn();
+    }
+    @And("the user selects 'Yes' to confirm the deletion")
+    public void confirmAlertOfRecordDeletion() throws InterruptedException {
+        Thread.sleep(5000);
+        contactDetailsPage.acceptAlertOfDeletion();
+    }
+    @Then("the user should receive a confirmation message that the record has been deleted successfully")
+    public void verifyRecordIsDeletedSuccessfully(){
+       Assert.assertTrue("The record was not deleted succesfully.",contactDetailsPage.verifyContactRecordSuccessfullyDeleted());
+    }
 }
-
-
-//    public static void main(String[] args) throws InterruptedException {
-//
-//        System.setProperty("webdriver.chrome.driver", "/Users/iteslarasu/Desktop/AutomationTrainingProject/selenium-training/chromedriver");
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("--disable-notifications");
-//        WebDriver driver = new ChromeDriver();
-//        driver.manage().window().maximize();
-//        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-//
-//        String title = driver.getTitle();
-//        Thread.sleep(5000);
-//        WebElement loginBtn = driver.findElement(By.xpath("//button[@type='submit']"));
-//
-//        System.out.println(loginBtn.getAttribute("type"));
-//        System.out.println(title);
-//        System.out.println(driver.getCurrentUrl());
-//        System.out.println(driver.findElement(By.cssSelector(".oxd-text.oxd-text--h5.orangehrm-login-title")).getText());
-//        System.out.println(loginBtn.isEnabled());
-//        System.out.println(loginBtn.isDisplayed());
-//        System.out.println(loginBtn.isSelected());
-//        Assert.assertEquals("Login", loginBtn.getText());
-//        Assert.assertTrue("Login button is displayed", loginBtn.isDisplayed());
-//
-//        driver.quit();
-//
-//    }
-

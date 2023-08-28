@@ -44,6 +44,9 @@ public class BasePage {
     public void waitUntilListIsVisible(List<WebElement> listOfElements){
         wait.until(ExpectedConditions.visibilityOfAllElements(listOfElements));
     }
+    public void waitUntilAlertIsVisible(){
+        wait.until(ExpectedConditions.alertIsPresent());
+    }
 
 
 }
