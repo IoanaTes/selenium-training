@@ -13,10 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
-import pages.ContactDetailsPage;
-import pages.HomePage;
-import pages.LogInPage;
-import pages.MyInfoPage;
+import pages.*;
 import utils.DocumentUtils;
 
 import java.io.IOException;
@@ -27,6 +24,7 @@ public class StepDefinition {
     private HomePage homePage;
     private MyInfoPage myInfoPage;
     private ContactDetailsPage contactDetailsPage;
+    private AdminPage adminPage;
 
 //    ExtentReports reports = new ExtentReports();
 //
@@ -46,6 +44,7 @@ public class StepDefinition {
         homePage = PageFactory.initElements(driver, HomePage.class);
         myInfoPage = PageFactory.initElements(driver, MyInfoPage.class);
         contactDetailsPage = PageFactory.initElements(driver, ContactDetailsPage.class);
+        adminPage = PageFactory.initElements(driver, AdminPage.class);
     }
 
     @After
@@ -139,8 +138,7 @@ public class StepDefinition {
         Assert.assertTrue("The contacts details were not updated successfully.",contactDetailsPage.verifyContactDetailsSuccessfullyUpdated());
     }
     @And("the user ticks the checkbox to select one record saved in the Records Found section")
-    public void tickCheckboxOfRecordToBeDeleted() throws InterruptedException {
-        Thread.sleep(10000);
+    public void tickCheckboxOfRecordToBeDeleted(){
         contactDetailsPage.clickRecordCheckBox();
     }
     @And("the user presses the 'Delete' button to delete that record")
@@ -148,12 +146,48 @@ public class StepDefinition {
         contactDetailsPage.clickDeleteSelectedRecordsBtn();
     }
     @And("the user selects 'Yes' to confirm the deletion")
-    public void confirmAlertOfRecordDeletion() throws InterruptedException {
-        Thread.sleep(5000);
+    public void confirmAlertOfRecordDeletion(){
         contactDetailsPage.acceptAlertOfDeletion();
     }
     @Then("the user should receive a confirmation message that the record has been deleted successfully")
     public void verifyRecordIsDeletedSuccessfully(){
        Assert.assertTrue("The record was not deleted succesfully.",contactDetailsPage.verifyContactRecordSuccessfullyDeleted());
+    }
+    @And("the user navigates to the 'Admin' link from the menu")
+    public void navigateToAdminPage(){
+        homePage.clickAdminLink();
+    }
+    @And("the user clicks on the 'Configuration' dropdown menu button")
+    public void clickConfigurationButton(){
+        adminPage.clickConfigurationDropdownBtn();
+    }
+    @And("the user selects the 'Language Packages' option")
+    public void selectLanguagePackageOption(){
+        adminPage.selectLanguagePackages();
+    }
+    @And("the user clicks on the 'Translate' button for 'Spanish - Español' language package")
+    public void clickSpanishTranslateButton(){
+        adminPage.clickSpanishTranslateBtn();
+    }
+    @Then("the user should be redirected to the Language Customization page")
+    public void verifyRedirectToLanguageCustomizationIsSuccessful(){
+        Assert.assertTrue("The redirect to Language Customization page is not succesful",adminPage.verifyRedirectToLanguageCustomizationPage());
+    }
+    @And("the user clicks the 'Add' button to add a new language to the packages")
+    public void addNewLanguagePackage(){
+        adminPage.clickAddNewLanguageBtn();
+    }
+    @And("the user selects the Colognian language from that list")
+    public void selectColognianLanguagePackage(){
+        adminPage.clickLanguageSelector();
+        adminPage.selectColognianAsANewLanguage();
+    }
+    @And("the user presses the 'Save' to add this new language to my packages")
+    public void saveLanguageSelection(){
+        adminPage.clickSaveLanguageSelectionBtn();
+    }
+    @Then("the user should be able to see the confirmation message that the language was successfully saved")
+    public void verifyLanguageIsAddedSuccesfully(){
+        adminPage.verifyLanguageIsSuccessfullyAdded();
     }
 }

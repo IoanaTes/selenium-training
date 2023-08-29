@@ -37,6 +37,8 @@ public class HomePage extends BasePage {
     private List<WebElement> statusSelectionList;
     @FindBy(xpath = "//div/span[contains(text(),'Rejected')]")
     private WebElement rejectedStatus;
+    @FindBy(xpath = "//a[@href='/web/index.php/admin/viewAdminModule']")
+    private WebElement adminLink;
 
 
 
@@ -72,6 +74,10 @@ public class HomePage extends BasePage {
     public void clickMyInfoLink() {
         waitUntilIsVisible(myInfoLink);
         myInfoLink.click();
+    }
+    public void clickAdminLink(){
+        waitUntilIsVisible(adminLink);
+        adminLink.click();
     }
 
 }

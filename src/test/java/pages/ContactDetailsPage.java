@@ -1,11 +1,10 @@
 package pages;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import utils.DocumentUtils;
-
 import java.io.IOException;
+import java.time.Duration;
 
 public class ContactDetailsPage extends BasePage {
 
@@ -40,15 +39,17 @@ public class ContactDetailsPage extends BasePage {
     private WebElement recordCheckBox;
     @FindBy(css = ".oxd-icon.bi-trash-fill.oxd-button-icon")
     private WebElement deleteSelectedRecordsBtn;
-    @FindBy(xpath = "//i[@class='oxd-icon bi-trash oxd-button-icon']")
-            private WebElement confirmDeletionOfRecordBtn;
+    @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--label-danger.orangehrm-button-margin")
+    private WebElement confirmDeletionOfRecordBtn;
+    @FindBy(xpath = "//form[@class='oxd-form']")
+    private WebElement contactDetailsForm;
 
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
     Actions actions = new Actions(getDriver());
 
 
     public void clickAddAttachmentButton() {
-        waitUntilIsVisible(addAttachmentBtn);
+        waitUntilIsClickable(addAttachmentBtn);
         js.executeScript("arguments[0].scrollIntoView(true);", addAttachmentBtn);
         addAttachmentBtn.click();
     }
@@ -78,9 +79,7 @@ public class ContactDetailsPage extends BasePage {
     public void insertStreet1() {
         waitUntilIsVisible(street1InputField);
         try {
-            street1InputField.click();
-            street1InputField.sendKeys(Keys.COMMAND + "a");
-            street1InputField.sendKeys(Keys.DELETE);
+            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].reset();", contactDetailsForm);
             street1InputField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("updatedStreet1"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,10 +106,9 @@ public class ContactDetailsPage extends BasePage {
     }
 
     public void clickRecordCheckBox() {
-        js.executeScript("arguments[0].scrollIntoView(true);", recordCheckBox);
-//        actions.moveToElement(recordCheckBox).click().build().perform();
+        js.executeScript("window.scrollBy(0,350)", "");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         js.executeScript("arguments[0].click();", recordCheckBox);
-
     }
 
     public void clickDeleteSelectedRecordsBtn() {
@@ -118,14 +116,11 @@ public class ContactDetailsPage extends BasePage {
     }
 
     public void acceptAlertOfDeletion() {
-//        waitUntilAlertIsVisible();
-//        Alert alert = driver.switchTo().alert();
-//        alert.accept();
-        waitUntilIsVisible(confirmDeletionOfRecordBtn);
         confirmDeletionOfRecordBtn.click();
     }
 
     public boolean verifyContactRecordSuccessfullyDeleted() {
+        waitUntilIsVisible(contactDetailsConfirmationMessage);
         return contactDetailsConfirmationMessage.getText().equals("Successfully Deleted");
     }
 
