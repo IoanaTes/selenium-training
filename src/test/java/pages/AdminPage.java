@@ -20,12 +20,14 @@ public class AdminPage extends BasePage {
     private WebElement addNewLanguageBtn;
     @FindBy(xpath = "//div[@class=\"oxd-select-text-input\"]")
     private WebElement languageSelectorDropdown;
-    @FindBy(xpath = "//span[contains(text(),\"Colognian\")]")
-    private WebElement colognianLanguageSelection;
+    @FindBy(xpath = "//div[@role=\"option\"][2]")
+    private WebElement newLanguageSelection;
     @FindBy(xpath = "//button[@type='submit']")
     private WebElement saveLanguageSelectionBtn;
     @FindBy(css = ".oxd-text.oxd-text--p.oxd-text--toast-message.oxd-toast-content-text")
     private WebElement languageSelectionConfirmationMessage;
+    @FindBy(css = ".orangehrm-container")
+    private WebElement languageContainer;
 
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
@@ -58,9 +60,8 @@ public class AdminPage extends BasePage {
         languageSelectorDropdown.click();
     }
 
-    public void selectColognianAsANewLanguage() {
-        waitUntilIsClickable(colognianLanguageSelection);
-        colognianLanguageSelection.click();
+    public void selectANewLanguage() {
+        newLanguageSelection.click();
     }
 
     public void clickSaveLanguageSelectionBtn() {

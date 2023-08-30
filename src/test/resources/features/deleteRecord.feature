@@ -1,3 +1,4 @@
+@test
 Feature: Delete record from Contact details
 
   Scenario:  Delete record from Contact details successfully

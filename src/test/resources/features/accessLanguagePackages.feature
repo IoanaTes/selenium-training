@@ -1,3 +1,4 @@
+@test
 Feature: Access the language packages
 
   Scenario: Access the language package successfully

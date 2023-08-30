@@ -1,14 +1,11 @@
 package pages;
 
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.DocumentUtils;
 
 import java.io.IOException;
-import java.util.Properties;
 
 public class LogInPage extends BasePage {
     private WebDriver driver;
@@ -57,8 +54,8 @@ public class LogInPage extends BasePage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
 
     public boolean areCredentialsInvalid() {
         waitUntilIsVisible(invalidUsernameAlert);

@@ -1,3 +1,4 @@
+@test
 Feature: Street and country details update
 
   Scenario: Update the street and country details successfully

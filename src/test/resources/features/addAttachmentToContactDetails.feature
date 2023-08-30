@@ -1,3 +1,4 @@
+@test
 Feature: Add attachment to Contact Details
 
   Scenario: Adding an attachment to contact details successfully
