@@ -4,6 +4,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utils.DocumentUtils;
+
+import java.io.IOException;
+import java.util.List;
 
 public class AdminPage extends BasePage {
     public AdminPage(WebDriver driver) {
@@ -23,11 +27,25 @@ public class AdminPage extends BasePage {
     @FindBy(xpath = "//div[@role=\"option\"][2]")
     private WebElement newLanguageSelection;
     @FindBy(xpath = "//button[@type='submit']")
-    private WebElement saveLanguageSelectionBtn;
+    private WebElement saveBtn;
     @FindBy(css = ".oxd-text.oxd-text--p.oxd-text--toast-message.oxd-toast-content-text")
-    private WebElement languageSelectionConfirmationMessage;
+    private WebElement confirmationMessage;
     @FindBy(css = ".orangehrm-container")
     private WebElement languageContainer;
+    @FindBy(xpath = "(//span[@class=\"oxd-topbar-body-nav-tab-item\"])[2]") ////span[contains(text(),"Job")]
+    private WebElement jobDropdownBtn;
+    @FindBy(xpath = "//a[contains(text(),\"Job Titles\")]")
+    private WebElement jobTitleSelection;
+    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary']")
+    private WebElement addNewJobBtn;
+    @FindBy(xpath = "(//input[@class='oxd-input oxd-input--active'])[2]")
+    private WebElement jobTitleInput;
+    @FindBy(xpath = "//textarea[@placeholder=\"Type description here\"]")
+    private WebElement jobDescriptionInput;
+    @FindBy(xpath = "//input[@type='file']")
+    private WebElement jobSpecificationBtn;
+    @FindBy(xpath = "//div[@class='oxd-table-cell oxd-padding-cell']//div")
+            private List<WebElement> jobRecords;
 
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
@@ -64,13 +82,63 @@ public class AdminPage extends BasePage {
         newLanguageSelection.click();
     }
 
-    public void clickSaveLanguageSelectionBtn() {
-        saveLanguageSelectionBtn.click();
+    public void clickSaveBtn() {
+        saveBtn.click();
     }
 
-    public boolean verifyLanguageIsSuccessfullyAdded() {
-        waitUntilIsVisible(languageSelectionConfirmationMessage);
-        return languageSelectionConfirmationMessage.getText().equalsIgnoreCase("Successfully Saved");
+    public boolean verifyConfirmationMessage() {
+        waitUntilIsVisible(confirmationMessage);
+        return confirmationMessage.getText().equalsIgnoreCase("Successfully Saved");
+    }
+    public void clickJobDropdownBtn() {
+        waitUntilIsVisible(jobDropdownBtn);
+        jobDropdownBtn.click();
+    }
+
+    public void selectJobTitle() {
+        waitUntilIsVisible(jobTitleSelection);
+        jobTitleSelection.click();
+    }
+    public void clickAddJobBtn() {
+        waitUntilIsVisible(addNewJobBtn);
+        addNewJobBtn.click();
+    }
+    public void addJobTitle() {
+        waitUntilIsVisible(jobTitleInput);
+        try {
+            jobTitleInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("jobTitle")+Math.random());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void addJobDescription() {
+        try {
+            jobDescriptionInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("jobDescription"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void addJobSpecificationAttachment() {
+        try {
+            jobSpecificationBtn.sendKeys(DocumentUtils.getPropertiesFile().getProperty("myDocPath"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public boolean findIfJobIsAdded() {
+
+        boolean myBool = false;
+        for (WebElement element : jobRecords) {
+            try {
+                if (element.getCssValue("div data-v-6c07a142").equals(DocumentUtils.getPropertiesFile().getProperty("jobDescription"))) {
+                    myBool = true;
+                    break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return myBool;
     }
 
 }

@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +17,7 @@ public class LeavePage extends BasePage {
     }
 
     @FindBy(css = ".oxd-select-text-input")
-    private WebElement selectStatus;
+    private WebElement statusSelect;
     @FindBy(css = ".oxd-chip.oxd-chip--default.oxd-multiselect-chips-selected")
     private List<WebElement> statusSelectionList;
     @FindBy(xpath = "//div/span[contains(text(),'Rejected')]")
@@ -33,20 +34,40 @@ public class LeavePage extends BasePage {
     private WebElement commentAddedConfirmationMessage;
     @FindBy(xpath = "(//div[@role='cell'])[8]")
     private WebElement firstRecordComment;
+    @FindBy(xpath = "(//input[@placeholder='yyyy-mm-dd'])[1]")
+    private WebElement calendarBox;
+    @FindBy(xpath = "(//input[@placeholder='yyyy-mm-dd'])[2]")
+    private WebElement secondCalendarBox;
+    @FindBy(xpath = "(//div[@class=\"oxd-select-text-input\"])[2]")
+    private WebElement leaveTypeSelect;
+    @FindBy(xpath = "//div[@class='oxd-select-option']")
+    private List<WebElement> usVacationLeaveType;
+    @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--secondary.orangehrm-left-space")
+    private WebElement searchLeaveRecordsBtn;
+    @FindBy(xpath = "//div[contains(text(),\"US - Vacation\")]")
+    private WebElement usVacationRecord;
+    @FindBy(xpath = "//div[@class=\"oxd-autocomplete-text-input oxd-autocomplete-text-input--active\"]/input")
+    private WebElement employeeNameInput;
+    @FindBy(xpath = "//div[@role=\"option\"]/span")
+    private WebElement selectEmployeeName;
+    @FindBy(css = ".oxd-text.oxd-text--p.oxd-text--toast-message.oxd-toast-content-text")
+    private WebElement confirmationMessage;
+    @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--ghost")
+    private WebElement resetBtn;
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
 
     public void selectRejectedStatus() {
-        waitUntilIsVisible(selectStatus);
-        selectStatus.click();
+        waitUntilIsVisible(statusSelect);
+        statusSelect.click();
         waitUntilIsVisible(rejectedStatus);
         rejectedStatus.click();
     }
 
-    public boolean findIfRejectedStatusIsSelected() {
+    public boolean findIfStatusIsSelected(String status) {
         boolean myBool = false;
         for (WebElement element : statusSelectionList) {
-            if (element.getText().equals("Rejected")) {
+            if (element.getText().equals(status)) {
                 myBool = true;
                 break;
             }
@@ -87,5 +108,54 @@ public class LeavePage extends BasePage {
         return firstRecordComment.getText().equalsIgnoreCase(DocumentUtils.getPropertiesFile().getProperty("leaveRecordComment"));
     }
 
+    public void completeCalendarPeriodForLeave(String fromCalendar, String toCalendar) {
+        waitUntilIsVisible(calendarBox);
+        calendarBox.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+        calendarBox.sendKeys(Keys.DELETE);
+        calendarBox.sendKeys(fromCalendar);
+        secondCalendarBox.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+        secondCalendarBox.sendKeys(Keys.DELETE);
+        secondCalendarBox.sendKeys(toCalendar);
+    }
+
+    public void selectVacationLeaveType(String leaveType) {
+        waitUntilIsVisible(leaveTypeSelect);
+        leaveTypeSelect.click();
+        for (WebElement element : usVacationLeaveType)
+            if (element.getText().equalsIgnoreCase(leaveType)) {
+                element.click();
+                break;
+            }
+
+    }
+
+    public void clickSearchRecordsBtn() {
+        js.executeScript("arguments[0].click();", searchLeaveRecordsBtn);
+
+    }
+
+    public boolean verifyRecordsAreFound() {
+        waitUntilIsVisible(usVacationRecord);
+        return usVacationRecord.isDisplayed();
+    }
+
+    public void insertEmployeeName(String employeeName) {
+        employeeNameInput.sendKeys(employeeName);
+        waitUntilIsVisible(selectEmployeeName);
+        selectEmployeeName.click();
+    }
+
+    public boolean verifyNoRecordsAreFound() {
+        waitUntilIsVisible(confirmationMessage);
+        return confirmationMessage.getText().equals("No Records Found");
+    }
+    public void clickResetBtn(){
+        waitUntilIsVisible(resetBtn);
+        resetBtn.click();
+    }
+    public boolean verifyResetIsSuccessful(){
+        waitUntilIsVisible(employeeNameInput);
+        return employeeNameInput.getAttribute("placeholder").equals("Type for hints...");
+    }
 
 }

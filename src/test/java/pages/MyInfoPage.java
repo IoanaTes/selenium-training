@@ -1,8 +1,10 @@
 package pages;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import utils.DocumentUtils;
+
 import java.io.IOException;
 import java.time.Duration;
 
@@ -14,6 +16,7 @@ public class MyInfoPage extends BasePage {
         super(driver);
         this.driver = driver;
     }
+
     @FindBy(xpath = "//a[@href='/web/index.php/pim/contactDetails/empNumber/7']")
     private WebElement contactDetailsLink;
 
@@ -21,6 +24,7 @@ public class MyInfoPage extends BasePage {
         waitUntilIsVisible(contactDetailsLink);
         contactDetailsLink.click();
     }
+
     @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--text")
     private WebElement addAttachmentBtn;
     @FindBy(xpath = "//input[@type='file']")
@@ -40,15 +44,21 @@ public class MyInfoPage extends BasePage {
     @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement saveContactDetails;
     @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text']")
-    private WebElement contactDetailsConfirmationMessage;
+    private WebElement confirmationMessage;
     @FindBy(xpath = "//label/input[@value='0']")
     private WebElement recordCheckBox;
     @FindBy(css = ".oxd-icon.bi-trash-fill.oxd-button-icon")
     private WebElement deleteSelectedRecordsBtn;
     @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--label-danger.orangehrm-button-margin")
     private WebElement confirmDeletionOfRecordBtn;
-    @FindBy(xpath = "//form[@class='oxd-form']")
+    @FindBy(xpath = "//form")
     private WebElement contactDetailsForm;
+    @FindBy(css = ".employee-image")
+    private WebElement profilePicture;
+    @FindBy(xpath = "//input[@type='file']")
+    private WebElement profilePicturePlusBtn;
+    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")
+    private WebElement saveProfilePictureBtn;
 
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
     Actions actions = new Actions(getDriver());
@@ -73,7 +83,7 @@ public class MyInfoPage extends BasePage {
         commentAttachmentArea.sendKeys("Hi, just uploaded a document!");
     }
 
-    public void clickSaveAttachmentButton(){
+    public void clickSaveAttachmentButton() {
         saveAttachmentBtn.click();
     }
 
@@ -83,9 +93,12 @@ public class MyInfoPage extends BasePage {
     }
 
     public void insertStreet1() {
-        waitUntilIsVisible(street1InputField);
+
         try {
-            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].reset();", contactDetailsForm);
+            waitUntilIsVisible(contactDetailsForm);
+
+            js.executeScript("arguments[0].reset();", contactDetailsForm);
+            actions.pause(Duration.ofSeconds(5)).build().perform();
             street1InputField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("updatedStreet1"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,14 +119,14 @@ public class MyInfoPage extends BasePage {
         saveContactDetails.click();
     }
 
-    public boolean verifyContactDetailsSuccessfullyUpdated() {
-        waitUntilIsVisible(contactDetailsConfirmationMessage);
-        return contactDetailsConfirmationMessage.getText().equals("Successfully Updated");
+    public boolean verifySuccessfulConfirmationMessage() {
+        waitUntilIsVisible(confirmationMessage);
+        return confirmationMessage.getText().equals("Successfully Updated");
     }
 
     public void clickRecordCheckBox() {
         js.executeScript("window.scrollBy(0,350)", "");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         js.executeScript("arguments[0].click();", recordCheckBox);
     }
 
@@ -126,8 +139,30 @@ public class MyInfoPage extends BasePage {
     }
 
     public boolean verifyContactRecordSuccessfullyDeleted() {
-        waitUntilIsVisible(contactDetailsConfirmationMessage);
-        return contactDetailsConfirmationMessage.getText().equals("Successfully Deleted");
+        waitUntilIsVisible(confirmationMessage);
+        return confirmationMessage.getText().equals("Successfully Deleted");
     }
 
+    public void clickProfilePicture() {
+        waitUntilIsVisible(profilePicture);
+        profilePicture.click();
+    }
+
+    public void addProfilePicture() {
+
+        try {
+            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+            profilePicturePlusBtn.sendKeys(DocumentUtils.getPropertiesFile().getProperty("profilePicturePath"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clickSaveProfilePictureBtn() {
+        saveProfilePictureBtn.click();
+    }
+
+
 }
+
+

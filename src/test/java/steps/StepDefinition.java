@@ -97,7 +97,7 @@ public class StepDefinition {
 
     @Then("user checks that the Rejected status is present as a selection")
     public void verifyRejectedStatusIsSelected() {
-        Assert.assertTrue("The rejected status was not successfully selected.", leavePage.findIfRejectedStatusIsSelected());
+        Assert.assertTrue("The rejected status was not successfully selected.", leavePage.findIfStatusIsSelected("Rejected"));
     }
 
     @And("the user navigates to the 'My Info' page from the menu")
@@ -153,7 +153,7 @@ public class StepDefinition {
 
     @And("the user should see the successfully updated confirmation message")
     public void verifyContactDetailsUpdatedSuccessfully() {
-        Assert.assertTrue("The contacts details were not updated successfully.", myInfoPage.verifyContactDetailsSuccessfullyUpdated());
+        Assert.assertTrue("The contacts details were not updated successfully.", myInfoPage.verifySuccessfulConfirmationMessage());
     }
 
     @And("the user ticks the checkbox to select one record saved in the Records Found section")
@@ -214,12 +214,12 @@ public class StepDefinition {
 
     @And("the user presses the 'Save' to add this new language to my packages")
     public void saveLanguageSelection() {
-        adminPage.clickSaveLanguageSelectionBtn();
+        adminPage.clickSaveBtn();
     }
 
     @Then("the user should be able to see the confirmation message that the language was successfully saved")
     public void verifyLanguageIsAddedSuccesfully() {
-        Assert.assertTrue("The language was not added", adminPage.verifyLanguageIsSuccessfullyAdded());
+        Assert.assertTrue("The language was not added", adminPage.verifyConfirmationMessage());
     }
 
     @When("the user selects the 'Change Password' option from drop-down user profile menu")
@@ -282,4 +282,98 @@ public class StepDefinition {
         leavePage.refreshPage();
         Assert.assertTrue("The comment message was not added successfully", leavePage.verifyCommentIsAdded());
     }
+
+    @And("the user selects a specific period for which I want to see the records")
+    public void selectSpecificPeriodForLeaveRecords() {
+        leavePage.completeCalendarPeriodForLeave("2022-07-04", "2022-07-07");
+    }
+
+    @And("the user selects to see only leave with Pending Approval status")
+    public void verifyPendingApprovalStatusIsSelected() {
+        Assert.assertTrue("Pending approval status is not selected.", leavePage.findIfStatusIsSelected("Pending Approval"));
+    }
+
+    @And("the user sets Leave Type as 'US - Vacation'")
+    public void selectUSVacationLeaveType() {
+        leavePage.selectVacationLeaveType("US - Vacation");
+    }
+
+    @And("the user presses search button")
+    public void clickSearchRecordsButton() {
+        leavePage.clickSearchRecordsBtn();
+    }
+
+    @And("the user should see all the records with all the data entered")
+    public void verifyVacationRecordsAreFound() {
+        Assert.assertTrue("No US vacations are found.", leavePage.verifyRecordsAreFound());
+    }
+    @And("the user selects '2022-08-01' to '2023-12-31' as a period for which I want to see the records")
+    public void selectSpecificPeriodForAnthonyPersonalLeave(){
+        leavePage.completeCalendarPeriodForLeave("2022-08-01","2023-12-31");
+    }
+    @And("the user sets Leave Type as 'CAN - Personal'")
+    public void selectCANPersonalLeaveType() {
+        leavePage.selectVacationLeaveType("CAN - Personal");
+    }
+
+    @And("the user enters Anthony Nolan in the Employee Name field")
+    public void insertNameInEmployeeField() {
+        leavePage.insertEmployeeName("Anthony Nolan");
+    }
+    @Then("the user should see a pop-up message that says no records found")
+    public void verifyNoRecordsAreFound(){
+        Assert.assertTrue("There were records found.",leavePage.verifyNoRecordsAreFound());
+    }
+    @And("the user clicks on the Reset button")
+    public void resetTheLeavePage(){
+        leavePage.clickResetBtn();
+        Assert.assertTrue("The reset was not successful.", leavePage.verifyResetIsSuccessful());
+    }
+    @And("the user clicks on the profile picture")
+    public void clickProfilePicture(){
+        myInfoPage.clickProfilePicture();
+    }
+    @And("the user adds a picture")
+    public void addNewProfilePicture(){
+        myInfoPage.addProfilePicture();
+    }
+    @And("the user clicks the 'Save' button")
+    public void clickSaveProfilePictureButton(){
+        myInfoPage.clickSaveProfilePictureBtn();
+    }
+    @Then("the user can see that the profile picture has been updated")
+    public void verifyProfilePictureIsUpdatedSuccesfully(){
+       Assert.assertTrue("Profile picture was not succesfully added.",myInfoPage.verifySuccessfulConfirmationMessage());
+    }
+    @And("the user selects the Job Titles option from the Job menu dropdown")
+    public void selectJobTitlesFromJobDropwdown(){
+        adminPage.clickJobDropdownBtn();
+        adminPage.selectJobTitle();
+    }
+    @And("the user clicks the Add button to add a new job")
+    public void clickAddJobButton(){
+        adminPage.clickAddJobBtn();
+    }
+    @And("the user adds a name for the job in the Job Title field")
+    public void insertJobTitle(){
+        adminPage.addJobTitle();
+    }
+    @And("the user adds a job description")
+    public void insertJobDescription(){
+        adminPage.addJobDescription();
+    }
+    @And("the user adds a Job Specification file")
+    public void attachJobSpecificationFile(){
+        adminPage.addJobSpecificationAttachment();
+    }
+    @And("the user clicks the 'Save' button to add the new job")
+    public void clickSaveJobButton(){
+        adminPage.clickSaveBtn();
+    }
+    @And("the user should see the confirmation message that the job was successfully added")
+    public void verifyJobIsAddedSuccesfully(){
+        Assert.assertTrue("Confirmation message is not present.",adminPage.verifyConfirmationMessage());
+//        Assert.assertTrue("Job was not added successfully.",adminPage.findIfJobIsAdded());
+    }
 }
+
