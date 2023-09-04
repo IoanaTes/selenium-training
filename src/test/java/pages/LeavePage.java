@@ -22,8 +22,8 @@ public class LeavePage extends BasePage {
     private List<WebElement> statusSelectionList;
     @FindBy(xpath = "//div/span[contains(text(),'Rejected')]")
     private WebElement rejectedStatus;
-    @FindBy(xpath = "(//button[@class=\"oxd-icon-button\"])[3]")
-    private WebElement threeDotsRecordBtn;
+    @FindBy(xpath = "//div[@class='oxd-table-row oxd-table-row--with-border']//button[@class=\"oxd-icon-button\"]")
+    private List<WebElement> threeDotsRecordListBtn;
     @FindBy(xpath = "(//li[@class=\"oxd-table-dropdown-item\"])[1]")
     private WebElement addCommentBtn;
     @FindBy(xpath = "//textarea")
@@ -77,8 +77,8 @@ public class LeavePage extends BasePage {
 
     public void clickThreeDotsRecordBtn() {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        js.executeScript("arguments[0].scrollIntoView(true);", threeDotsRecordBtn);
-        threeDotsRecordBtn.click();
+        js.executeScript("arguments[0].scrollIntoView(true);", threeDotsRecordListBtn.get(0));
+        js.executeScript("arguments[0].click();", threeDotsRecordListBtn.get(0));
     }
 
     public void clickAddCommentBtn() {

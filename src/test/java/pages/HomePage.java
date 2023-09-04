@@ -22,6 +22,10 @@ public class HomePage extends BasePage {
     private WebElement adminLink;
     @FindBy(xpath = "//a[@href=\"/web/index.php/pim/updatePassword\"]")
     private WebElement changePasswordBtn;
+    @FindBy(xpath = "//a[@href=\"/web/index.php/recruitment/viewRecruitmentModule\"]")
+    private WebElement recruitmentLink;
+    @FindBy(xpath = "//a[@href=\"/web/index.php/pim/viewPimModule\"]")
+    private WebElement PIMLink;
 
     public boolean isLoginSuccessful() {
         waitUntilIsClickable(user);
@@ -45,6 +49,14 @@ public class HomePage extends BasePage {
         user.click();
         waitUntilIsVisible(changePasswordBtn);
         changePasswordBtn.click();
+    }
+    public void clickRecruitmentLink(){
+        waitUntilIsVisible(recruitmentLink);
+        recruitmentLink.click();
+    }
+    public void clickPIMLink(){
+        waitUntilIsVisible(PIMLink);
+        PIMLink.click();
     }
 
 }

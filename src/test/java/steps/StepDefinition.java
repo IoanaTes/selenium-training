@@ -26,11 +26,7 @@ public class StepDefinition {
     private MyInfoPage myInfoPage;
     private AdminPage adminPage;
     private PIMPage pimPage;
-
-
-//    ExtentReports reports = new ExtentReports();
-//
-//    ExtentTest test = reports.
+    private RecruitmentPage recruitmentPage;
 
 
     @Before
@@ -49,6 +45,7 @@ public class StepDefinition {
         adminPage = PageFactory.initElements(driver, AdminPage.class);
         pimPage = PageFactory.initElements(driver, PIMPage.class);
         leavePage = PageFactory.initElements(driver, LeavePage.class);
+        recruitmentPage = PageFactory.initElements(driver, RecruitmentPage.class);
     }
 
     @After
@@ -192,7 +189,7 @@ public class StepDefinition {
     }
 
     @And("the user clicks on the 'Translate' button for 'Spanish - Español' language package")
-    public void clickSpanishTranslateButton() {
+    public void clickSpanishTranslateButton() throws InterruptedException {
         adminPage.clickSpanishTranslateBtn();
     }
 
@@ -307,10 +304,12 @@ public class StepDefinition {
     public void verifyVacationRecordsAreFound() {
         Assert.assertTrue("No US vacations are found.", leavePage.verifyRecordsAreFound());
     }
+
     @And("the user selects '2022-08-01' to '2023-12-31' as a period for which I want to see the records")
-    public void selectSpecificPeriodForAnthonyPersonalLeave(){
-        leavePage.completeCalendarPeriodForLeave("2022-08-01","2023-12-31");
+    public void selectSpecificPeriodForAnthonyPersonalLeave() {
+        leavePage.completeCalendarPeriodForLeave("2022-08-01", "2023-12-31");
     }
+
     @And("the user sets Leave Type as 'CAN - Personal'")
     public void selectCANPersonalLeaveType() {
         leavePage.selectVacationLeaveType("CAN - Personal");
@@ -320,60 +319,163 @@ public class StepDefinition {
     public void insertNameInEmployeeField() {
         leavePage.insertEmployeeName("Anthony Nolan");
     }
+
     @Then("the user should see a pop-up message that says no records found")
-    public void verifyNoRecordsAreFound(){
-        Assert.assertTrue("There were records found.",leavePage.verifyNoRecordsAreFound());
+    public void verifyNoRecordsAreFound() {
+        Assert.assertTrue("There were records found.", leavePage.verifyNoRecordsAreFound());
     }
+
     @And("the user clicks on the Reset button")
-    public void resetTheLeavePage(){
+    public void resetTheLeavePage() {
         leavePage.clickResetBtn();
         Assert.assertTrue("The reset was not successful.", leavePage.verifyResetIsSuccessful());
     }
+
     @And("the user clicks on the profile picture")
-    public void clickProfilePicture(){
+    public void clickProfilePicture() {
         myInfoPage.clickProfilePicture();
     }
+
     @And("the user adds a picture")
-    public void addNewProfilePicture(){
+    public void addNewProfilePicture() {
         myInfoPage.addProfilePicture();
     }
+
     @And("the user clicks the 'Save' button")
-    public void clickSaveProfilePictureButton(){
+    public void clickSaveProfilePictureButton() {
         myInfoPage.clickSaveProfilePictureBtn();
     }
+
     @Then("the user can see that the profile picture has been updated")
-    public void verifyProfilePictureIsUpdatedSuccesfully(){
-       Assert.assertTrue("Profile picture was not succesfully added.",myInfoPage.verifySuccessfulConfirmationMessage());
+    public void verifyProfilePictureIsUpdatedSuccesfully() {
+        Assert.assertTrue("Profile picture was not succesfully added.", myInfoPage.verifySuccessfulConfirmationMessage());
     }
+
     @And("the user selects the Job Titles option from the Job menu dropdown")
-    public void selectJobTitlesFromJobDropwdown(){
+    public void selectJobTitlesFromJobDropwdown() {
         adminPage.clickJobDropdownBtn();
         adminPage.selectJobTitle();
     }
+
     @And("the user clicks the Add button to add a new job")
-    public void clickAddJobButton(){
+    public void clickAddJobButton() {
         adminPage.clickAddJobBtn();
     }
+
     @And("the user adds a name for the job in the Job Title field")
-    public void insertJobTitle(){
+    public void insertJobTitle() {
         adminPage.addJobTitle();
     }
+
     @And("the user adds a job description")
-    public void insertJobDescription(){
+    public void insertJobDescription() {
         adminPage.addJobDescription();
     }
+
     @And("the user adds a Job Specification file")
-    public void attachJobSpecificationFile(){
+    public void attachJobSpecificationFile() {
         adminPage.addJobSpecificationAttachment();
     }
+
     @And("the user clicks the 'Save' button to add the new job")
-    public void clickSaveJobButton(){
+    public void clickSaveJobButton() {
         adminPage.clickSaveBtn();
     }
+
     @And("the user should see the confirmation message that the job was successfully added")
-    public void verifyJobIsAddedSuccesfully(){
-        Assert.assertTrue("Confirmation message is not present.",adminPage.verifyConfirmationMessage());
-//        Assert.assertTrue("Job was not added successfully.",adminPage.findIfJobIsAdded());
+    public void verifyJobIsAddedSuccesfully() {
+        Assert.assertTrue("Confirmation message is not present.", adminPage.verifyConfirmationMessage());
+    }
+
+    @And("the user clicks on Recruitment link from the menu which will redirect me to the viewCandidates page")
+    public void theUserClicksOnRecruitmentLinkFromTheMenuWhichWillRedirectMeToTheViewCandidatesPage() {
+        homePage.clickRecruitmentLink();
+    }
+
+    @And("then user clicks on the view icon located in the Actions section to see a candidate's application in Status Shortlisted")
+    public void thenUserClicksOnTheViewIconLocatedInTheActionsSectionToSeeACandidateSApplicationInStatusShortlisted() {
+        recruitmentPage.selectShortListedStatus();
+        recruitmentPage.clickSearchBtn();
+        recruitmentPage.clickViewBtn();
+    }
+
+    @And("the user clicks the 'Schedule Interview' button for that candidate")
+    public void theUserClicksTheScheduleInterviewButtonForThatCandidate() {
+        recruitmentPage.clickScheduleInterviewBtn();
+    }
+
+    @And("the user introduces the title of the interview")
+    public void theUserIntroducesTheTitleOfTheInterview() {
+        recruitmentPage.insertTitle();
+    }
+
+    @And("the user adds two interviewers in the 'Interviewer' field")
+    public void theUserAddsTwoInterviewersInTheInterviewerField() {
+        recruitmentPage.addTwoInterviewers();
+    }
+
+    @And("the user selects a date and hour")
+    public void theUserSelectsADateAndHour() {
+        recruitmentPage.insertDateForInterview();
+        recruitmentPage.insertTimeForInterview();
+    }
+
+    @And("the user presses the 'Save' button to schedule the interview")
+    public void theUserPressesTheSaveButtonToScheduleTheInterview() {
+        recruitmentPage.clickSaveInterviewBtn();
+    }
+
+    @Then("the user should see the confirmation message for this scheduled interview")
+    public void theUserShouldSeeTheConfirmationMessageForThisScheduledInterview() {
+        Assert.assertTrue("NOK", recruitmentPage.verifyInterviewIsAdded());
+    }
+
+    @And("the user clicks on PIM link from the menu")
+    public void theUserClicksOnPIMLinkFromTheMenu() {
+        homePage.clickPIMLink();
+    }
+
+    @And("the user chooses the Add Employee option")
+    public void theUserChoosesTheAddEmployeeOption() {
+        pimPage.clickAddEmployeeBtn();
+    }
+
+    @And("the user adds a profile picture for that employee")
+    public void theUserAddsAProfilePictureForThatEmployee() {
+        pimPage.addEmployeePicture();
+    }
+
+    @And("the user enters the employee's full name in the Employee Full Name section")
+    public void theUserEntersTheEmployeeSFullNameInTheEmployeeFullNameSection() {
+pimPage.insertEmployeeFullName();
+    }
+
+
+    @And("the user introduces an employee id in the Employee Id field")
+    public void theUserIntroducesAnEmployeeIdInTheEmployeeIdField() {
+pimPage.insertEmployeeID();
+    }
+
+    @And("the user clicks the Create Login Details button to make the option available")
+    public void theUserClicksTheCreateLoginDetailsButtonToMakeTheOptionAvailable() {
+pimPage.clickLoginDetailsSwitch();
+    }
+
+    @And("the user adds a username and password")
+    public void theUserAddsAUsernameAndPassword() {
+pimPage.insertUsernameField();
+pimPage.insertPasswordField();
+pimPage.insertConfirmationPasswordField();
+    }
+
+    @And("the user presses the Save button for employee")
+    public void theUserPressesTheSaveButtonForEmployee() {
+pimPage.clickSaveBtn();
+    }
+
+    @Then("the user should see a confirmation message that the employee was successfully saved")
+    public void theUserShouldSeeAConfirmationMessageThatTheEmployeeWasSuccessfullySaved() {
+        Assert.assertTrue("NOK", pimPage.verifyEmployeeIsAdded());
     }
 }
 
