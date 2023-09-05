@@ -5,11 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePage {
-    private WebDriver driver;
 
     public HomePage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     @FindBy(css = ".oxd-userdropdown-name")
@@ -20,12 +18,19 @@ public class HomePage extends BasePage {
     private WebElement myInfoLink;
     @FindBy(xpath = "//a[@href='/web/index.php/admin/viewAdminModule']")
     private WebElement adminLink;
-    @FindBy(xpath = "//a[@href=\"/web/index.php/pim/updatePassword\"]")
+    @FindBy(xpath = "//a[@href='/web/index.php/pim/updatePassword']")
     private WebElement changePasswordBtn;
-    @FindBy(xpath = "//a[@href=\"/web/index.php/recruitment/viewRecruitmentModule\"]")
+    @FindBy(xpath = "//a[@href='/web/index.php/recruitment/viewRecruitmentModule']")
     private WebElement recruitmentLink;
-    @FindBy(xpath = "//a[@href=\"/web/index.php/pim/viewPimModule\"]")
+    @FindBy(xpath = "//a[@href='/web/index.php/pim/viewPimModule']")
     private WebElement PIMLink;
+    @FindBy(xpath = "//a[@href='/web/index.php/maintenance/viewMaintenanceModule']")
+    private WebElement maintenanceLink;
+
+    public void clickMaintenanceLink(){
+        waitUntilIsVisible(maintenanceLink);
+        maintenanceLink.click();
+    }
 
     public boolean isLoginSuccessful() {
         waitUntilIsClickable(user);

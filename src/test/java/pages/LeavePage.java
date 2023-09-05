@@ -22,9 +22,9 @@ public class LeavePage extends BasePage {
     private List<WebElement> statusSelectionList;
     @FindBy(xpath = "//div/span[contains(text(),'Rejected')]")
     private WebElement rejectedStatus;
-    @FindBy(xpath = "//div[@class='oxd-table-row oxd-table-row--with-border']//button[@class=\"oxd-icon-button\"]")
+    @FindBy(xpath = "//div[@class='oxd-table-row oxd-table-row--with-border']//button[@class='oxd-icon-button']")
     private List<WebElement> threeDotsRecordListBtn;
-    @FindBy(xpath = "(//li[@class=\"oxd-table-dropdown-item\"])[1]")
+    @FindBy(xpath = "(//li[@class='oxd-table-dropdown-item'])[1]")
     private WebElement addCommentBtn;
     @FindBy(xpath = "//textarea")
     private WebElement commentTextArea;
@@ -34,21 +34,21 @@ public class LeavePage extends BasePage {
     private WebElement commentAddedConfirmationMessage;
     @FindBy(xpath = "(//div[@role='cell'])[8]")
     private WebElement firstRecordComment;
-    @FindBy(xpath = "(//input[@placeholder='yyyy-mm-dd'])[1]")
+    @FindBy(xpath = "(//input[@placeholder='dd-mm-yyyy'])[1]")
     private WebElement calendarBox;
-    @FindBy(xpath = "(//input[@placeholder='yyyy-mm-dd'])[2]")
+    @FindBy(xpath = "(//input[@placeholder='dd-mm-yyyy'])[2]")
     private WebElement secondCalendarBox;
-    @FindBy(xpath = "(//div[@class=\"oxd-select-text-input\"])[2]")
+    @FindBy(xpath = "(//div[@class='oxd-select-text-input'])[2]")
     private WebElement leaveTypeSelect;
     @FindBy(xpath = "//div[@class='oxd-select-option']")
     private List<WebElement> usVacationLeaveType;
     @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--secondary.orangehrm-left-space")
     private WebElement searchLeaveRecordsBtn;
-    @FindBy(xpath = "//div[contains(text(),\"US - Vacation\")]")
+    @FindBy(xpath = "//div[contains(text(),'US - Vacation')]")
     private WebElement usVacationRecord;
-    @FindBy(xpath = "//div[@class=\"oxd-autocomplete-text-input oxd-autocomplete-text-input--active\"]/input")
+    @FindBy(xpath = "//div[@class='oxd-autocomplete-text-input oxd-autocomplete-text-input--active']/input")
     private WebElement employeeNameInput;
-    @FindBy(xpath = "//div[@role=\"option\"]/span")
+    @FindBy(xpath = "//div[@role='option']/span")
     private WebElement selectEmployeeName;
     @FindBy(css = ".oxd-text.oxd-text--p.oxd-text--toast-message.oxd-toast-content-text")
     private WebElement confirmationMessage;

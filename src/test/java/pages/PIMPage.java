@@ -14,13 +14,13 @@ public class PIMPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(xpath = "(//input[@type=\"password\"])[1]")
+    @FindBy(xpath = "(//input[@type='password'])[1]")
     private WebElement currentPassField;
-    @FindBy(xpath = "(//input[@type=\"password\"])[2]")
+    @FindBy(xpath = "(//input[@type='password'])[2]")
     private WebElement newPassField;
-    @FindBy(xpath = "(//input[@type=\"password\"])[3]")
+    @FindBy(xpath = "(//input[@type='password'])[3]")
     private WebElement confirmNewPassField;
-    @FindBy(xpath = "//button[@type=\"submit\"]")
+    @FindBy(xpath = "//button[@type='submit']")
     private WebElement saveBtn;
     @FindBy(css = ".oxd-text.oxd-text--p.oxd-text--toast-message.oxd-toast-content-text")
     private WebElement confirmationMessage;
@@ -34,36 +34,38 @@ public class PIMPage extends BasePage {
     private WebElement middleNameInput;
     @FindBy(xpath = "//input[@name='lastName']")
     private WebElement lastNameInput;
-    @FindBy(xpath = "//div[@class=\"oxd-form-row\"]//input[@class='oxd-input oxd-input--active']")
+    @FindBy(xpath = "//div[@class='oxd-form-row']//input[@class='oxd-input oxd-input--active']")
     private WebElement employeeID;
     @FindBy(css = ".oxd-switch-wrapper")
     private WebElement loginDetailsSwitch;
     @FindBy(xpath = "(//input[@class='oxd-input oxd-input--active'])[3]")
     private WebElement usernameField;
-    @FindBy(xpath = "(//input[@class='oxd-input oxd-input--active'])[4]")
+    @FindBy(xpath = "(//input[@type='password'])[1]")
     private WebElement passwordField;
-    @FindBy(xpath = "(//input[@class='oxd-input oxd-input--active'])[5]")
+    @FindBy(xpath = "(//input[@type='password'])[2]")
     private WebElement confirmPasswordField;
     @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--secondary.orangehrm-left-space")
     private WebElement saveEmployeeBtn;
+
     public boolean verifyEmployeeIsAdded() {
         waitUntilIsVisible(confirmationMessage);
         return confirmationMessage.getText().equalsIgnoreCase("Successfully Saved");
     }
 
-    public void clickSaveEmployeeBtn(){
+    public void clickSaveEmployeeBtn() {
         saveEmployeeBtn.click();
     }
 
-    public void insertUsernameField(){
+    public void insertUsernameField() {
         waitUntilIsVisible(usernameField);
         try {
-            usernameField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("fakeusername"));
+            usernameField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("fakeusername") + Math.random());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void insertPasswordField(){
+
+    public void insertPasswordField() {
         waitUntilIsVisible(passwordField);
         try {
             passwordField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("anotherPassword"));
@@ -71,7 +73,8 @@ public class PIMPage extends BasePage {
             e.printStackTrace();
         }
     }
-    public void insertConfirmationPasswordField(){
+
+    public void insertConfirmationPasswordField() {
         waitUntilIsVisible(confirmPasswordField);
         try {
             confirmPasswordField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("anotherPassword"));
@@ -81,11 +84,11 @@ public class PIMPage extends BasePage {
     }
 
 
-    public void clickLoginDetailsSwitch(){
+    public void clickLoginDetailsSwitch() {
         loginDetailsSwitch.click();
     }
 
-    public void insertEmployeeID(){
+    public void insertEmployeeID() {
         employeeID.clear();
         try {
             employeeID.sendKeys(DocumentUtils.getPropertiesFile().getProperty("employeeID"));
@@ -94,28 +97,31 @@ public class PIMPage extends BasePage {
         }
     }
 
-    public void insertEmployeeFullName(){
+    public void insertEmployeeFullName() {
         waitUntilIsVisible(firstNameInput);
-          try {
-              firstNameInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("firstName"));
-              middleNameInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("middleName"));
-              lastNameInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("lastName"));
+        try {
+            firstNameInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("firstName"));
+            middleNameInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("middleName"));
+            lastNameInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("lastName"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void addEmployeePicture(){
-    try {
-        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        employeePicture.sendKeys(DocumentUtils.getPropertiesFile().getProperty("profilePicturePath"));
-    } catch (IOException e) {
-        e.printStackTrace();
+
+    public void addEmployeePicture() {
+        try {
+            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+            employeePicture.sendKeys(DocumentUtils.getPropertiesFile().getProperty("profilePicturePath"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
-    public void clickAddEmployeeBtn(){
+
+    public void clickAddEmployeeBtn() {
         waitUntilIsVisible(addEmployeeBtn);
         addEmployeeBtn.click();
     }
+
     public void insertCurrentPassword() {
         try {
             waitUntilIsVisible(currentPassField);

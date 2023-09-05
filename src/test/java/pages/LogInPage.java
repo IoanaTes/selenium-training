@@ -47,7 +47,7 @@ public class LogInPage extends BasePage {
                 setUsernameField(DocumentUtils.getPropertiesFile().getProperty("username"));
                 setPasswordField(DocumentUtils.getPropertiesFile().getProperty("password"));
             } else if (username.equals("incorrect username")) {
-                setUsernameField(DocumentUtils.getPropertiesFile().getProperty("fakeusername"));
+                setUsernameField(DocumentUtils.getPropertiesFile().getProperty("fakeUsername"));
                 setPasswordField(DocumentUtils.getPropertiesFile().getProperty("password"));
             }
 

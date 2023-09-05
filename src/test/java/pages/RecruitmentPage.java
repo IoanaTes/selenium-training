@@ -15,7 +15,7 @@ public class RecruitmentPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(xpath = "(//div[@class=\"oxd-select-text-input\"])[4]")
+    @FindBy(xpath = "(//div[@class='oxd-select-text-input'])[4]")
     private WebElement statusSelection;
     @FindBy(xpath = "//div[@class='oxd-input-group oxd-input-field-bottom-space']")
     private List<WebElement> candidatesFilterList;
@@ -31,11 +31,11 @@ public class RecruitmentPage extends BasePage {
     private WebElement interviewersInput;
     @FindBy(xpath = "//div[@class='oxd-autocomplete-option']//span")
     private WebElement interviewerSelect;
-    @FindBy(xpath = "//button[@class=\"oxd-button oxd-button--medium oxd-button--text orangehrm-input-field-bottom-space\"]")
+    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--text orangehrm-input-field-bottom-space']")
     private WebElement addAnotherInterviewerInput;
-    @FindBy(xpath = "(//div[@class=\"oxd-autocomplete-text-input oxd-autocomplete-text-input--active\"]/input)[2]")
+    @FindBy(xpath = "(//div[@class='oxd-autocomplete-text-input oxd-autocomplete-text-input--active']/input)[2]")
     private WebElement anotherInterviewerInput;
-    @FindBy(xpath = "//input[@placeholder='yyyy-mm-dd']")
+    @FindBy(xpath = "//input[@placeholder='dd-mm-yyyy']")
     private WebElement dateInput;
     @FindBy(xpath = "//input[@placeholder='hh:mm']")
     private WebElement timeInput;
@@ -43,6 +43,33 @@ public class RecruitmentPage extends BasePage {
     private WebElement saveInterviewBtn;
     @FindBy(css = ".oxd-text.oxd-text--p.oxd-text--toast-message.oxd-toast-content-text")
     private WebElement confirmationMessage;
+    @FindBy(xpath = "//nav[@aria-label='Topbar Menu']//ul/li[2]")
+    private WebElement vacanciesBtn;
+    @FindBy(xpath = "(//div[@class='oxd-select-text oxd-select-text--active'])[1]")
+    private WebElement jobTitleInput;
+    @FindBy(xpath = "(//div[@role='listbox'])/div[2]")
+    private WebElement accountAssistantSelection;
+    @FindBy(xpath = "//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']/span")
+    private WebElement recordsFoundText;
+
+    public String verifyRecordsAreFoundForThisVacancy(){
+        return recordsFoundText.getText();
+    }
+
+    public void selectAccountAssistantJob(){
+        waitUntilIsVisible(accountAssistantSelection);
+        accountAssistantSelection.click();
+    }
+
+    public void clickJobTitleInput(){
+        waitUntilIsVisible(jobTitleInput);
+        jobTitleInput.click();
+    }
+
+    public void clickVacanciesBtn(){
+        waitUntilIsVisible(vacanciesBtn);
+        vacanciesBtn.click();
+    }
 
     public void selectShortListedStatus() {
         waitUntilListIsVisible(candidatesFilterList);
@@ -92,10 +119,19 @@ public class RecruitmentPage extends BasePage {
         interviewerSelect.click();
     }
     public void insertDateForInterview(){
-        dateInput.sendKeys("2023-10-01");
+        waitUntilIsVisible(dateInput);
+        try {
+            dateInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("interviewDate"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void insertTimeForInterview(){
-        timeInput.sendKeys("13:00");
+        try {
+            timeInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("interviewTime"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void clickSaveInterviewBtn(){
         saveInterviewBtn.click();

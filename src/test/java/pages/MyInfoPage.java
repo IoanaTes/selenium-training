@@ -19,12 +19,6 @@ public class MyInfoPage extends BasePage {
 
     @FindBy(xpath = "//a[@href='/web/index.php/pim/contactDetails/empNumber/7']")
     private WebElement contactDetailsLink;
-
-    public void clickContactDetailsLink() {
-        waitUntilIsVisible(contactDetailsLink);
-        contactDetailsLink.click();
-    }
-
     @FindBy(css = ".oxd-button.oxd-button--medium.oxd-button--text")
     private WebElement addAttachmentBtn;
     @FindBy(xpath = "//input[@type='file']")
@@ -33,15 +27,15 @@ public class MyInfoPage extends BasePage {
     private WebElement commentAttachmentArea;
     @FindBy(xpath = "//div[@class='orangehrm-attachment']//button[@type='submit']")
     private WebElement saveAttachmentBtn;
-    @FindBy(css = "[class=\"oxd-table-cell oxd-padding-cell\"]:nth-child(2)")
+    @FindBy(css = "[class='oxd-table-cell oxd-padding-cell']:nth-child(2)")
     private WebElement fileNameOfAttachment;
     @FindBy(xpath = "(//input[@class='oxd-input oxd-input--active'])[2]")
     private WebElement street1InputField;
     @FindBy(css = ".oxd-select-text.oxd-select-text--active")
     private WebElement countryField;
-    @FindBy(xpath = "//div[@role='listbox']//span[contains(text(),\"Algeria\")]")
+    @FindBy(xpath = "//div[@role='listbox']//span[contains(text(),'Algeria')]")
     private WebElement algeriaCountrySelection;
-    @FindBy(xpath = "//button[@type=\"submit\"]")
+    @FindBy(xpath = "//button[@type='submit']")
     private WebElement saveContactDetails;
     @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-text']")
     private WebElement confirmationMessage;
@@ -63,7 +57,10 @@ public class MyInfoPage extends BasePage {
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
     Actions actions = new Actions(getDriver());
 
-
+    public void clickContactDetailsLink() {
+        waitUntilIsVisible(contactDetailsLink);
+        contactDetailsLink.click();
+    }
     public void clickAddAttachmentButton() {
         waitUntilIsClickable(addAttachmentBtn);
         js.executeScript("arguments[0].scrollIntoView(true);", addAttachmentBtn);
@@ -71,6 +68,7 @@ public class MyInfoPage extends BasePage {
     }
 
     public void addDocumentToContactDetails() {
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         try {
             browseBtn.sendKeys(DocumentUtils.getPropertiesFile().getProperty("myDocPath"));
         } catch (IOException e) {

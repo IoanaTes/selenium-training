@@ -27,6 +27,7 @@ public class StepDefinition {
     private AdminPage adminPage;
     private PIMPage pimPage;
     private RecruitmentPage recruitmentPage;
+    private MaintenancePage maintenancePage;
 
 
     @Before
@@ -46,6 +47,7 @@ public class StepDefinition {
         pimPage = PageFactory.initElements(driver, PIMPage.class);
         leavePage = PageFactory.initElements(driver, LeavePage.class);
         recruitmentPage = PageFactory.initElements(driver, RecruitmentPage.class);
+        maintenancePage = PageFactory.initElements(driver, MaintenancePage.class);
     }
 
     @After
@@ -60,9 +62,9 @@ public class StepDefinition {
 
     @And("^the user introduces the \"(.*)\"$")
     public void login(String credentials) {
-        if (credentials.equals("valid credentials"))
+        if (credentials.equals("valid credentials")) {
             logInPage.setCredentials("correct username");
-        else if (credentials.equals("invalid credentials")) {
+        } else if (credentials.equals("invalid credentials")) {
             logInPage.setCredentials("incorrect username");
         }
     }
@@ -188,14 +190,14 @@ public class StepDefinition {
         adminPage.selectLanguagePackages();
     }
 
-    @And("the user clicks on the 'Translate' button for 'Spanish - Español' language package")
-    public void clickSpanishTranslateButton() throws InterruptedException {
-        adminPage.clickSpanishTranslateBtn();
+    @And("the user clicks on the 'Translate' button for {string} language package")
+    public void clickSpanishTranslateButton(String language) {
+        adminPage.clickSpanishTranslateBtn(language);
     }
 
     @Then("the user should be redirected to the Language Customization page")
     public void verifyRedirectToLanguageCustomizationIsSuccessful() {
-        Assert.assertTrue("The redirect to Language Customization page is not succesful", adminPage.verifyRedirectToLanguageCustomizationPage());
+        Assert.assertTrue("The redirect to Language Customization page is not successful", adminPage.verifyRedirectToLanguageCustomizationPage());
     }
 
     @And("the user clicks the 'Add' button to add a new language to the packages")
@@ -204,7 +206,7 @@ public class StepDefinition {
     }
 
     @And("the user selects a new language from that list")
-    public void selectColognianLanguagePackage() {
+    public void selectNewLanguagePackage() {
         adminPage.clickLanguageSelector();
         adminPage.selectANewLanguage();
     }
@@ -280,19 +282,14 @@ public class StepDefinition {
         Assert.assertTrue("The comment message was not added successfully", leavePage.verifyCommentIsAdded());
     }
 
-    @And("the user selects a specific period for which I want to see the records")
-    public void selectSpecificPeriodForLeaveRecords() {
-        leavePage.completeCalendarPeriodForLeave("2022-07-04", "2022-07-07");
-    }
-
     @And("the user selects to see only leave with Pending Approval status")
     public void verifyPendingApprovalStatusIsSelected() {
         Assert.assertTrue("Pending approval status is not selected.", leavePage.findIfStatusIsSelected("Pending Approval"));
     }
 
-    @And("the user sets Leave Type as 'US - Vacation'")
-    public void selectUSVacationLeaveType() {
-        leavePage.selectVacationLeaveType("US - Vacation");
+    @And("the user sets Leave Type as {string}")
+    public void selectLeaveType(String leaveType) {
+        leavePage.selectVacationLeaveType(leaveType);
     }
 
     @And("the user presses search button")
@@ -305,19 +302,14 @@ public class StepDefinition {
         Assert.assertTrue("No US vacations are found.", leavePage.verifyRecordsAreFound());
     }
 
-    @And("the user selects '2022-08-01' to '2023-12-31' as a period for which I want to see the records")
-    public void selectSpecificPeriodForAnthonyPersonalLeave() {
-        leavePage.completeCalendarPeriodForLeave("2022-08-01", "2023-12-31");
+    @And("the user selects {string} to {string} as a period for which I want to see the records")
+    public void selectSpecificPeriodForPersonalLeave(String startDate, String endDate) {
+        leavePage.completeCalendarPeriodForLeave(startDate, endDate);
     }
 
-    @And("the user sets Leave Type as 'CAN - Personal'")
-    public void selectCANPersonalLeaveType() {
-        leavePage.selectVacationLeaveType("CAN - Personal");
-    }
-
-    @And("the user enters Anthony Nolan in the Employee Name field")
-    public void insertNameInEmployeeField() {
-        leavePage.insertEmployeeName("Anthony Nolan");
+    @And("the user enters {string} in the Employee Name field")
+    public void insertNameInEmployeeField(String employeeName) {
+        leavePage.insertEmployeeName(employeeName);
     }
 
     @Then("the user should see a pop-up message that says no records found")
@@ -347,12 +339,12 @@ public class StepDefinition {
     }
 
     @Then("the user can see that the profile picture has been updated")
-    public void verifyProfilePictureIsUpdatedSuccesfully() {
-        Assert.assertTrue("Profile picture was not succesfully added.", myInfoPage.verifySuccessfulConfirmationMessage());
+    public void verifyProfilePictureIsUpdatedSuccessfully() {
+        Assert.assertTrue("Profile picture was not successfully added.", myInfoPage.verifySuccessfulConfirmationMessage());
     }
 
     @And("the user selects the Job Titles option from the Job menu dropdown")
-    public void selectJobTitlesFromJobDropwdown() {
+    public void selectJobTitlesFromJobDropdown() {
         adminPage.clickJobDropdownBtn();
         adminPage.selectJobTitle();
     }
@@ -383,17 +375,17 @@ public class StepDefinition {
     }
 
     @And("the user should see the confirmation message that the job was successfully added")
-    public void verifyJobIsAddedSuccesfully() {
+    public void verifyJobIsAddedSuccessfully() {
         Assert.assertTrue("Confirmation message is not present.", adminPage.verifyConfirmationMessage());
     }
 
     @And("the user clicks on Recruitment link from the menu which will redirect me to the viewCandidates page")
-    public void theUserClicksOnRecruitmentLinkFromTheMenuWhichWillRedirectMeToTheViewCandidatesPage() {
+    public void theUserClicksOnRecruitmentLink() {
         homePage.clickRecruitmentLink();
     }
 
-    @And("then user clicks on the view icon located in the Actions section to see a candidate's application in Status Shortlisted")
-    public void thenUserClicksOnTheViewIconLocatedInTheActionsSectionToSeeACandidateSApplicationInStatusShortlisted() {
+    @And("the user clicks on the view icon located in the Actions section to see a candidate's application in Status Shortlisted")
+    public void thenUserClicksOnTheViewIconInStatusShortlisted() {
         recruitmentPage.selectShortListedStatus();
         recruitmentPage.clickSearchBtn();
         recruitmentPage.clickViewBtn();
@@ -427,7 +419,7 @@ public class StepDefinition {
 
     @Then("the user should see the confirmation message for this scheduled interview")
     public void theUserShouldSeeTheConfirmationMessageForThisScheduledInterview() {
-        Assert.assertTrue("NOK", recruitmentPage.verifyInterviewIsAdded());
+        Assert.assertTrue("The interview is not added successfully.", recruitmentPage.verifyInterviewIsAdded());
     }
 
     @And("the user clicks on PIM link from the menu")
@@ -447,35 +439,87 @@ public class StepDefinition {
 
     @And("the user enters the employee's full name in the Employee Full Name section")
     public void theUserEntersTheEmployeeSFullNameInTheEmployeeFullNameSection() {
-pimPage.insertEmployeeFullName();
+        pimPage.insertEmployeeFullName();
     }
 
 
     @And("the user introduces an employee id in the Employee Id field")
     public void theUserIntroducesAnEmployeeIdInTheEmployeeIdField() {
-pimPage.insertEmployeeID();
+        pimPage.insertEmployeeID();
     }
 
     @And("the user clicks the Create Login Details button to make the option available")
     public void theUserClicksTheCreateLoginDetailsButtonToMakeTheOptionAvailable() {
-pimPage.clickLoginDetailsSwitch();
+        pimPage.clickLoginDetailsSwitch();
     }
 
     @And("the user adds a username and password")
     public void theUserAddsAUsernameAndPassword() {
-pimPage.insertUsernameField();
-pimPage.insertPasswordField();
-pimPage.insertConfirmationPasswordField();
+        pimPage.insertUsernameField();
+        pimPage.insertPasswordField();
+        pimPage.insertConfirmationPasswordField();
     }
 
     @And("the user presses the Save button for employee")
     public void theUserPressesTheSaveButtonForEmployee() {
-pimPage.clickSaveBtn();
+        pimPage.clickSaveBtn();
     }
 
     @Then("the user should see a confirmation message that the employee was successfully saved")
     public void theUserShouldSeeAConfirmationMessageThatTheEmployeeWasSuccessfullySaved() {
-        Assert.assertTrue("NOK", pimPage.verifyEmployeeIsAdded());
+        Assert.assertTrue("Employee is not successfully added.", pimPage.verifyEmployeeIsAdded());
+    }
+
+    @And("the user clicks on the Vacancies option")
+    public void theUserClicksOnTheVacanciesOption() {
+        recruitmentPage.clickVacanciesBtn();
+    }
+
+    @And("the user searches for vacancies with job title as Account Assistant")
+    public void theUserSearchesForVacanciesWithJobTitleAsAccountAssistant() {
+        recruitmentPage.clickJobTitleInput();
+        recruitmentPage.selectAccountAssistantJob();
+    }
+
+    @Then("the user can see that all records are displayed for Account Assistant")
+    public void theUserCanSeeThatAllRecordsAreDisplayedForAccountAssistant() {
+        Assert.assertNotEquals("No records found", recruitmentPage.verifyRecordsAreFoundForThisVacancy());
+    }
+
+    @And("the user clicks on Recruitment link from the menu which will redirect me to the purgeEmployee page")
+    public void theUserClicksOnRecruitmentLinkFromTheMenuWhichWillRedirectMeToThePurgeEmployeePage() {
+        homePage.clickMaintenanceLink();
+    }
+
+    @And("the user enters the admin password to validate my administrator credentials")
+    public void theUserEntersTheAdminPasswordToValidateMyAdministratorCredentials() {
+        maintenancePage.insertPassword();
+    }
+
+    @And("the user clicks the Confirm button")
+    public void theUserClicksTheConfirmButton() {
+        maintenancePage.clickConfirmBtn();
+    }
+
+    @And("the user clicks on the Access Records option")
+    public void theUserClicksOnTheAccessRecordsOption() {
+        maintenancePage.clickAccessRecordsBtn();
+    }
+
+    @And("the user enters an employee in the Employee Name input field")
+    public void theUserEntersAnEmployeeInTheEmployeeNameField() {
+        maintenancePage.insertEmployeeName();
+        maintenancePage.selectEmployeeName();
+    }
+
+    @And("the user clicks on the Search button")
+    public void theUserClicksOnTheSearchButton() {
+        maintenancePage.clickSearchBtn();
+    }
+
+    @Then("the user can see that the employee ID is displayed in the Selected Employee section")
+    public void theUserCanSeeThatTheEmployeeIDIsDisplayedInTheSelectedEmployeeSectionByUsingCssSelector() {
+        Assert.assertTrue("Employee ID is not displayed.", maintenancePage.verifyEmployeeIDIsDisplayed());
     }
 }
 
