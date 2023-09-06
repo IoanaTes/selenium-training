@@ -1,11 +1,11 @@
 @test
 Feature: Access employee records
 
-  Scenario: Access Anthony Nolan's record successfully
+  Scenario: Access an employee's record successfully
     Given the user accesses the website
     When the user introduces the "valid credentials"
     And the user presses on Login button
-    And the user clicks on Recruitment link from the menu which will redirect me to the purgeEmployee page
+    And the user clicks on Maintenance link from the menu which will redirect me to the purgeEmployee page
     And the user enters the admin password to validate my administrator credentials
     And the user clicks the Confirm button
     And the user clicks on the Access Records option

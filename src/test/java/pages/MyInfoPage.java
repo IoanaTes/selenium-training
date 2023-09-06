@@ -10,11 +10,8 @@ import java.time.Duration;
 
 public class MyInfoPage extends BasePage {
 
-    private WebDriver driver;
-
     public MyInfoPage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     @FindBy(xpath = "//a[@href='/web/index.php/pim/contactDetails/empNumber/7']")
@@ -61,6 +58,7 @@ public class MyInfoPage extends BasePage {
         waitUntilIsVisible(contactDetailsLink);
         contactDetailsLink.click();
     }
+
     public void clickAddAttachmentButton() {
         waitUntilIsClickable(addAttachmentBtn);
         js.executeScript("arguments[0].scrollIntoView(true);", addAttachmentBtn);
@@ -94,7 +92,6 @@ public class MyInfoPage extends BasePage {
 
         try {
             waitUntilIsVisible(contactDetailsForm);
-
             js.executeScript("arguments[0].reset();", contactDetailsForm);
             actions.pause(Duration.ofSeconds(5)).build().perform();
             street1InputField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("updatedStreet1"));

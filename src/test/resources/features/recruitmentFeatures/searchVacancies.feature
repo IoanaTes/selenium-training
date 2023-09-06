@@ -1,6 +1,7 @@
 @test
 Feature: Search for vacancies
-  Scenario:  Search for Automation Tester vacancies successfully
+
+  Scenario:  Searching for specific vacancies successfully
     Given the user accesses the website
     When the user introduces the "valid credentials"
     And the user presses on Login button

@@ -27,7 +27,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[@href='/web/index.php/maintenance/viewMaintenanceModule']")
     private WebElement maintenanceLink;
 
-    public void clickMaintenanceLink(){
+    public void clickMaintenanceLink() {
         waitUntilIsVisible(maintenanceLink);
         maintenanceLink.click();
     }
@@ -41,25 +41,30 @@ public class HomePage extends BasePage {
         waitUntilIsVisible(leaveLink);
         leaveLink.click();
     }
+
     public void clickMyInfoLink() {
         waitUntilIsVisible(myInfoLink);
         myInfoLink.click();
     }
-    public void clickAdminLink(){
+
+    public void clickAdminLink() {
         waitUntilIsVisible(adminLink);
         adminLink.click();
     }
-    public void clickChangePasswordBtn(){
+
+    public void clickChangePasswordBtn() {
         waitUntilIsVisible(user);
         user.click();
         waitUntilIsVisible(changePasswordBtn);
         changePasswordBtn.click();
     }
-    public void clickRecruitmentLink(){
+
+    public void clickRecruitmentLink() {
         waitUntilIsVisible(recruitmentLink);
         recruitmentLink.click();
     }
-    public void clickPIMLink(){
+
+    public void clickPIMLink() {
         waitUntilIsVisible(PIMLink);
         PIMLink.click();
     }

@@ -7,17 +7,15 @@ Feature: See vacation leave records
     And the user presses on Login button
     When user clicks the Leave link from the menu
 
-
   Scenario: Filter vacation leave records for a certain period successfully
-    And the user selects "04-07-2022" to "07-07-2022" as a period for which I want to see the records
+    And the user selects "2022-07-04" to "2022-07-07" as a period for which I want to see the records
     And the user selects to see only leave with Pending Approval status
     And the user sets Leave Type as "US - Vacation"
     And the user presses search button
     Then the user should see all the records with all the data entered
 
-
   Scenario: Filter personal leave records for a certain person and period successfully
-    And the user selects "01-08-2022" to "31-12-2023" as a period for which I want to see the records
+    And the user selects "2022-08-01" to "2023-12-31" as a period for which I want to see the records
     And the user selects to see only leave with Pending Approval status
     And the user sets Leave Type as "CAN - Personal"
     And the user enters "Anthony Nolan" in the Employee Name field

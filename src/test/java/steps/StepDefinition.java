@@ -32,7 +32,11 @@ public class StepDefinition {
 
     @Before
     public void before() {
-        System.setProperty("webdriver.chrome.driver", "/Users/iteslarasu/Desktop/AutomationTrainingProject/selenium-training/chromedriver");
+        try {
+            System.setProperty("webdriver.chrome.driver", DocumentUtils.getPropertiesFile().getProperty("webDriverPath"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-notifications");
         driver = new ChromeDriver();
@@ -380,145 +384,145 @@ public class StepDefinition {
     }
 
     @And("the user clicks on Recruitment link from the menu which will redirect me to the viewCandidates page")
-    public void theUserClicksOnRecruitmentLink() {
+    public void clickOnRecruitmentLink() {
         homePage.clickRecruitmentLink();
     }
 
     @And("the user clicks on the view icon located in the Actions section to see a candidate's application in Status Shortlisted")
-    public void thenUserClicksOnTheViewIconInStatusShortlisted() {
+    public void clickOnTheViewIconInStatusShortlisted() {
         recruitmentPage.selectShortListedStatus();
         recruitmentPage.clickSearchBtn();
         recruitmentPage.clickViewBtn();
     }
 
     @And("the user clicks the 'Schedule Interview' button for that candidate")
-    public void theUserClicksTheScheduleInterviewButtonForThatCandidate() {
+    public void clickTheScheduleInterviewButton() {
         recruitmentPage.clickScheduleInterviewBtn();
     }
 
     @And("the user introduces the title of the interview")
-    public void theUserIntroducesTheTitleOfTheInterview() {
+    public void introduceTheTitleOfTheInterview() {
         recruitmentPage.insertTitle();
     }
 
     @And("the user adds two interviewers in the 'Interviewer' field")
-    public void theUserAddsTwoInterviewersInTheInterviewerField() {
+    public void addTwoInterviewersInTheInterviewerField() {
         recruitmentPage.addTwoInterviewers();
     }
 
     @And("the user selects a date and hour")
-    public void theUserSelectsADateAndHour() {
+    public void selectADateAndHour() {
         recruitmentPage.insertDateForInterview();
         recruitmentPage.insertTimeForInterview();
     }
 
     @And("the user presses the 'Save' button to schedule the interview")
-    public void theUserPressesTheSaveButtonToScheduleTheInterview() {
+    public void pressTheSaveButtonToScheduleTheInterview() {
         recruitmentPage.clickSaveInterviewBtn();
     }
 
     @Then("the user should see the confirmation message for this scheduled interview")
-    public void theUserShouldSeeTheConfirmationMessageForThisScheduledInterview() {
+    public void verifyTheConfirmationMessageForScheduledInterview() {
         Assert.assertTrue("The interview is not added successfully.", recruitmentPage.verifyInterviewIsAdded());
     }
 
     @And("the user clicks on PIM link from the menu")
-    public void theUserClicksOnPIMLinkFromTheMenu() {
+    public void clickOnPIMLinkFromTheMenu() {
         homePage.clickPIMLink();
     }
 
     @And("the user chooses the Add Employee option")
-    public void theUserChoosesTheAddEmployeeOption() {
+    public void chooseTheAddEmployeeOption() {
         pimPage.clickAddEmployeeBtn();
     }
 
     @And("the user adds a profile picture for that employee")
-    public void theUserAddsAProfilePictureForThatEmployee() {
+    public void addAProfilePictureForEmployee() {
         pimPage.addEmployeePicture();
     }
 
     @And("the user enters the employee's full name in the Employee Full Name section")
-    public void theUserEntersTheEmployeeSFullNameInTheEmployeeFullNameSection() {
+    public void enterTheEmployeeSFullName() {
         pimPage.insertEmployeeFullName();
     }
 
 
     @And("the user introduces an employee id in the Employee Id field")
-    public void theUserIntroducesAnEmployeeIdInTheEmployeeIdField() {
+    public void introduceAnEmployeeId() {
         pimPage.insertEmployeeID();
     }
 
     @And("the user clicks the Create Login Details button to make the option available")
-    public void theUserClicksTheCreateLoginDetailsButtonToMakeTheOptionAvailable() {
+    public void clickTheCreateLoginDetailsButton() {
         pimPage.clickLoginDetailsSwitch();
     }
 
     @And("the user adds a username and password")
-    public void theUserAddsAUsernameAndPassword() {
+    public void addAUsernameAndPassword() {
         pimPage.insertUsernameField();
         pimPage.insertPasswordField();
         pimPage.insertConfirmationPasswordField();
     }
 
     @And("the user presses the Save button for employee")
-    public void theUserPressesTheSaveButtonForEmployee() {
+    public void clickTheSaveButtonForEmployee() {
         pimPage.clickSaveBtn();
     }
 
     @Then("the user should see a confirmation message that the employee was successfully saved")
-    public void theUserShouldSeeAConfirmationMessageThatTheEmployeeWasSuccessfullySaved() {
+    public void verifyAConfirmationMessageThatTheEmployeeWasSuccessfullySaved() {
         Assert.assertTrue("Employee is not successfully added.", pimPage.verifyEmployeeIsAdded());
     }
 
     @And("the user clicks on the Vacancies option")
-    public void theUserClicksOnTheVacanciesOption() {
+    public void clickOnTheVacanciesOption() {
         recruitmentPage.clickVacanciesBtn();
     }
 
     @And("the user searches for vacancies with job title as Account Assistant")
-    public void theUserSearchesForVacanciesWithJobTitleAsAccountAssistant() {
+    public void searchForVacanciesWithJobTitle() {
         recruitmentPage.clickJobTitleInput();
         recruitmentPage.selectAccountAssistantJob();
     }
 
     @Then("the user can see that all records are displayed for Account Assistant")
-    public void theUserCanSeeThatAllRecordsAreDisplayedForAccountAssistant() {
+    public void verifyThatAllRecordsAreDisplayed() {
         Assert.assertNotEquals("No records found", recruitmentPage.verifyRecordsAreFoundForThisVacancy());
     }
 
-    @And("the user clicks on Recruitment link from the menu which will redirect me to the purgeEmployee page")
-    public void theUserClicksOnRecruitmentLinkFromTheMenuWhichWillRedirectMeToThePurgeEmployeePage() {
+    @And("the user clicks on Maintenance link from the menu which will redirect me to the purgeEmployee page")
+    public void clickOnRecruitmentLinkFromTheMenu() {
         homePage.clickMaintenanceLink();
     }
 
     @And("the user enters the admin password to validate my administrator credentials")
-    public void theUserEntersTheAdminPasswordToValidateMyAdministratorCredentials() {
+    public void enterTheAdminPassword() {
         maintenancePage.insertPassword();
     }
 
     @And("the user clicks the Confirm button")
-    public void theUserClicksTheConfirmButton() {
+    public void clickTheConfirmButton() {
         maintenancePage.clickConfirmBtn();
     }
 
     @And("the user clicks on the Access Records option")
-    public void theUserClicksOnTheAccessRecordsOption() {
+    public void clickOnTheAccessRecordsOption() {
         maintenancePage.clickAccessRecordsBtn();
     }
 
     @And("the user enters an employee in the Employee Name input field")
-    public void theUserEntersAnEmployeeInTheEmployeeNameField() {
+    public void enterAnEmployeeInTheEmployeeNameField() {
         maintenancePage.insertEmployeeName();
         maintenancePage.selectEmployeeName();
     }
 
     @And("the user clicks on the Search button")
-    public void theUserClicksOnTheSearchButton() {
+    public void clickOnTheSearchButton() {
         maintenancePage.clickSearchBtn();
     }
 
     @Then("the user can see that the employee ID is displayed in the Selected Employee section")
-    public void theUserCanSeeThatTheEmployeeIDIsDisplayedInTheSelectedEmployeeSectionByUsingCssSelector() {
+    public void verifyThatTheEmployeeIDIsDisplayed() {
         Assert.assertTrue("Employee ID is not displayed.", maintenancePage.verifyEmployeeIDIsDisplayed());
     }
 }

@@ -1,7 +1,7 @@
 @test
 Feature: Street and country details update
 
-  Scenario: Update the street and country details successfully
+  Scenario: Updating the street and country details successfully
     Given the user accesses the website
     When the user introduces the "valid credentials"
     And the user presses on Login button

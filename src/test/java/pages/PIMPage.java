@@ -59,7 +59,7 @@ public class PIMPage extends BasePage {
     public void insertUsernameField() {
         waitUntilIsVisible(usernameField);
         try {
-            usernameField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("fakeusername") + Math.random());
+            usernameField.sendKeys(DocumentUtils.getPropertiesFile().getProperty("fakeUsername") + Math.random());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -35,7 +35,7 @@ public class RecruitmentPage extends BasePage {
     private WebElement addAnotherInterviewerInput;
     @FindBy(xpath = "(//div[@class='oxd-autocomplete-text-input oxd-autocomplete-text-input--active']/input)[2]")
     private WebElement anotherInterviewerInput;
-    @FindBy(xpath = "//input[@placeholder='dd-mm-yyyy']")
+    @FindBy(xpath = "//input[@placeholder='yyyy-mm-dd']")
     private WebElement dateInput;
     @FindBy(xpath = "//input[@placeholder='hh:mm']")
     private WebElement timeInput;
@@ -52,21 +52,21 @@ public class RecruitmentPage extends BasePage {
     @FindBy(xpath = "//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']/span")
     private WebElement recordsFoundText;
 
-    public String verifyRecordsAreFoundForThisVacancy(){
+    public String verifyRecordsAreFoundForThisVacancy() {
         return recordsFoundText.getText();
     }
 
-    public void selectAccountAssistantJob(){
+    public void selectAccountAssistantJob() {
         waitUntilIsVisible(accountAssistantSelection);
         accountAssistantSelection.click();
     }
 
-    public void clickJobTitleInput(){
+    public void clickJobTitleInput() {
         waitUntilIsVisible(jobTitleInput);
         jobTitleInput.click();
     }
 
-    public void clickVacanciesBtn(){
+    public void clickVacanciesBtn() {
         waitUntilIsVisible(vacanciesBtn);
         vacanciesBtn.click();
     }
@@ -82,18 +82,21 @@ public class RecruitmentPage extends BasePage {
         }
     }
 
-    public void clickSearchBtn(){
+    public void clickSearchBtn() {
         searchBtn.click();
     }
-    public void clickViewBtn(){
+
+    public void clickViewBtn() {
         waitUntilListIsVisible(viewIcons);
         viewIcons.get(0).click();
     }
-    public void clickScheduleInterviewBtn(){
+
+    public void clickScheduleInterviewBtn() {
         waitUntilIsVisible(scheduleInterviewBtn);
         scheduleInterviewBtn.click();
     }
-    public void insertTitle(){
+
+    public void insertTitle() {
         waitUntilIsVisible(interviewTitleInput);
         try {
             interviewTitleInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("interviewTitle"));
@@ -101,7 +104,8 @@ public class RecruitmentPage extends BasePage {
             e.printStackTrace();
         }
     }
-    public void addTwoInterviewers(){
+
+    public void addTwoInterviewers() {
         try {
             interviewersInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("firstInterviewer"));
         } catch (IOException e) {
@@ -118,7 +122,8 @@ public class RecruitmentPage extends BasePage {
         waitUntilIsVisible(interviewerSelect);
         interviewerSelect.click();
     }
-    public void insertDateForInterview(){
+
+    public void insertDateForInterview() {
         waitUntilIsVisible(dateInput);
         try {
             dateInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("interviewDate"));
@@ -126,16 +131,19 @@ public class RecruitmentPage extends BasePage {
             e.printStackTrace();
         }
     }
-    public void insertTimeForInterview(){
+
+    public void insertTimeForInterview() {
         try {
             timeInput.sendKeys(DocumentUtils.getPropertiesFile().getProperty("interviewTime"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void clickSaveInterviewBtn(){
+
+    public void clickSaveInterviewBtn() {
         saveInterviewBtn.click();
     }
+
     public boolean verifyInterviewIsAdded() {
         waitUntilIsVisible(confirmationMessage);
         return confirmationMessage.getText().equals("Successfully Updated");

@@ -1,7 +1,7 @@
 @test
 Feature: Add employee
 
-  Scenario: Add a new employee successfully
+  Scenario: Adding a new employee successfully
     Given the user accesses the website
     And the user introduces the "valid credentials"
     And the user presses on Login button

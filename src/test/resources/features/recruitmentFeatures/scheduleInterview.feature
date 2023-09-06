@@ -1,6 +1,7 @@
 @test
 Feature: Schedule interview
-  Scenario:  Schedule an interview with a candidate successfully
+
+  Scenario:  Scheduling an interview with a candidate successfully
     Given the user accesses the website
     When the user introduces the "valid credentials"
     And the user presses on Login button

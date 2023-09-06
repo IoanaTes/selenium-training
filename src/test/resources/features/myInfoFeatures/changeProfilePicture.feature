@@ -1,7 +1,7 @@
 @test
 Feature: Change profile picture
 
-  Scenario: Change profile picture successfully
+  Scenario: Changing profile picture successfully
     Given the user accesses the website
     When the user introduces the "valid credentials"
     And the user presses on Login button

@@ -34,9 +34,9 @@ public class LeavePage extends BasePage {
     private WebElement commentAddedConfirmationMessage;
     @FindBy(xpath = "(//div[@role='cell'])[8]")
     private WebElement firstRecordComment;
-    @FindBy(xpath = "(//input[@placeholder='dd-mm-yyyy'])[1]")
+    @FindBy(xpath = "(//input[@placeholder='yyyy-mm-dd'])[1]")
     private WebElement calendarBox;
-    @FindBy(xpath = "(//input[@placeholder='dd-mm-yyyy'])[2]")
+    @FindBy(xpath = "(//input[@placeholder='yyyy-mm-dd'])[2]")
     private WebElement secondCalendarBox;
     @FindBy(xpath = "(//div[@class='oxd-select-text-input'])[2]")
     private WebElement leaveTypeSelect;
@@ -149,11 +149,13 @@ public class LeavePage extends BasePage {
         waitUntilIsVisible(confirmationMessage);
         return confirmationMessage.getText().equals("No Records Found");
     }
-    public void clickResetBtn(){
+
+    public void clickResetBtn() {
         waitUntilIsVisible(resetBtn);
         resetBtn.click();
     }
-    public boolean verifyResetIsSuccessful(){
+
+    public boolean verifyResetIsSuccessful() {
         waitUntilIsVisible(employeeNameInput);
         return employeeNameInput.getAttribute("placeholder").equals("Type for hints...");
     }

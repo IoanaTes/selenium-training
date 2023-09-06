@@ -1,7 +1,7 @@
 @test
 Feature: Password change
 
-  Scenario: Change the current password successfully
+  Scenario: Changing the current password successfully
     Given the user accesses the website
     And the user introduces the "valid credentials"
     And the user presses on Login button

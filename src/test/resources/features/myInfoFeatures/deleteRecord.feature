@@ -1,7 +1,7 @@
 @test
 Feature: Delete record from Contact details
 
-  Scenario:  Delete record from Contact details successfully
+  Scenario:  Deleting record from Contact details successfully
     Given the user accesses the website
     When the user introduces the "valid credentials"
     And the user presses on Login button
